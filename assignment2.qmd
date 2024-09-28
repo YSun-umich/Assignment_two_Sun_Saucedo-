@@ -38,6 +38,23 @@ summarize(
  kch_median=median(hits),
  kch_var=var(hits))
 
+
+res$interest_by_city %>%
+  na.omit() %>%
+  group_by(keyword)%>%
+summarize(
+ kch_mean=mean(hits),
+ kch_median=median(hits),
+ kch_var=var(hits))
+
+res$interest_by_dma %>%
+  na.omit() %>%
+  group_by(keyword)%>%
+summarize(
+ kch_mean=mean(hits),
+ kch_median=median(hits),
+ kch_var=var(hits))
+
 ```
 
 Answer the following questions for the keywords "crime" and "loans".
