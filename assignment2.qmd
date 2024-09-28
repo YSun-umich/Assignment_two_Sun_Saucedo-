@@ -1,5 +1,5 @@
 ---
-title: "Assignment 2"
+title: "Assignment 2 Yao Sun & Valeria Castañeda Saucedo"
 subtitle: "Due at 11:59pm on October 1."
 format: pdf
 editor: visual
@@ -28,11 +28,15 @@ res <- gtrends(c("crime", "loans"),
                time = "2020-01-01 2020-12-31", 
                low_search_volume = TRUE)
 plot(res)
+
+summary(gtrends$crime)
 ```
 
 Answer the following questions for the keywords "crime" and "loans".
 
 -   Find the mean, median and variance of the search hits for the keywords.
+
+\*
 
 -   Which cities (locations) have the highest search frequency for `loans`? Note that there might be multiple rows for each city if there were hits for both "crime" and "loans" in that city. It might be easier to answer this question if we had the search hits info for both search terms in two separate variables. That is, each row would represent a unique city.
 
