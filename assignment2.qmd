@@ -61,7 +61,7 @@ Answer the following questions for the keywords "crime" and "loans".
 
 -   Find the mean, median and variance of the search hits for the keywords.
 
-\*The mean for the keyword "crime" is
+\*When we filtered for the keyword "crime" in the interest over time data set, we found that the mean was
 
 -   Which cities (locations) have the highest search frequency for `loans`? Note that there might be multiple rows for each city if there were hits for both "crime" and "loans" in that city. It might be easier to answer this question if we had the search hits info for both search terms in two separate variables. That is, each row would represent a unique city.
 
