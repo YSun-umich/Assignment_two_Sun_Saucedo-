@@ -23,20 +23,28 @@ Whenever possible, use piping and `dplyr`. Avoid hard-coding any numbers within 
 Our first data source is the Google Trends API. Suppose we are interested in the search trends for `crime` and `loans` in Illinois in the year 2020. We could find this using the following code:
 
 ```{r}
+library(dplyr)
 res <- gtrends(c("crime", "loans"), 
                geo = "US-IL", 
                time = "2020-01-01 2020-12-31", 
                low_search_volume = TRUE)
 plot(res)
 
-summary(gtrends$crime)
+res$interest_over_time %>%
+  na.omit() %>%
+  group_by(keyword)%>%
+summarize(
+ kch_mean=mean(hits),
+ kch_median=median(hits),
+ kch_var=var(hits))
+
 ```
 
 Answer the following questions for the keywords "crime" and "loans".
 
 -   Find the mean, median and variance of the search hits for the keywords.
 
-\*
+\*The mean for the keyword "crime" is
 
 -   Which cities (locations) have the highest search frequency for `loans`? Note that there might be multiple rows for each city if there were hits for both "crime" and "loans" in that city. It might be easier to answer this question if we had the search hits info for both search terms in two separate variables. That is, each row would represent a unique city.
 
