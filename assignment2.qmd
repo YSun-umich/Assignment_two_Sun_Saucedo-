@@ -34,26 +34,26 @@ res$interest_over_time %>%
   na.omit() %>%
   group_by(keyword)%>%
 summarize(
- kch_mean=mean(hits),
- kch_median=median(hits),
- kch_var=var(hits))
+ kch_iotmean=mean(hits),
+ kch_iotmedian=median(hits),
+ kch_iotvar=var(hits))
 
 
 res$interest_by_city %>%
   na.omit() %>%
   group_by(keyword)%>%
 summarize(
- kch_mean=mean(hits),
- kch_median=median(hits),
- kch_var=var(hits))
+ kch_ibcmean=mean(hits),
+ kch_ibcmedian=median(hits),
+ kch_ibcvar=var(hits))
 
 res$interest_by_dma %>%
   na.omit() %>%
   group_by(keyword)%>%
 summarize(
- kch_mean=mean(hits),
- kch_median=median(hits),
- kch_var=var(hits))
+ kch_ibdmean=mean(hits),
+ kch_ibdmedian=median(hits),
+ kch_ibdvar=var(hits))
 
 ```
 
@@ -61,7 +61,7 @@ Answer the following questions for the keywords "crime" and "loans".
 
 -   Find the mean, median and variance of the search hits for the keywords.
 
-\*When we filtered for the keyword "crime" in the interest over time data set, we found that the mean was
+\*When we filtered for the keyword "crime" in the interest over time data set, we found that the mean was 51.92 hits, the median was 52 hits, and the variance was 64.30. Additionally, within this data set we found that the mean hit for keyword "loan" was 63.62, the median was 61 hits, and the variance was 108.00.
 
 -   Which cities (locations) have the highest search frequency for `loans`? Note that there might be multiple rows for each city if there were hits for both "crime" and "loans" in that city. It might be easier to answer this question if we had the search hits info for both search terms in two separate variables. That is, each row would represent a unique city.
 
