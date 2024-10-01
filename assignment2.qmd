@@ -71,7 +71,7 @@ Answer the following questions for the keywords "crime" and "loans".
 
     ```{r}
     # library(dplyr)
-    library(tidyverse)
+    # library(tidyverse)
 
     revised_data <- res$interest_by_city %>%
       na.omit() %>%
