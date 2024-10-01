@@ -5,8 +5,6 @@ format: pdf
 editor: visual
 ---
 
-test GItHub 
-
 You may work in pairs or individually for this assignment. Make sure you join a group in Canvas if you are working in pairs. Turn in this assignment as an HTML or PDF file to ELMS. Make sure to include the R Markdown or Quarto file that was used to generate it.
 
 ```{r}
@@ -154,13 +152,19 @@ Answer the following questions with the "crime" and "loans" Google trends data a
 
 -   First, check how many cities don't appear in both data sets, i.e. cannot be matched. Then, create a new data set by joining the Google Trends and the ACS data. Keep only cities that appear in both data sets.
 
-    ```{r}
-    acs_unique_locations <- unique(acs_il$location)
+```{r}
+acs_unique_locations <- unique(acs_il$location)
     
+google_unique_locations <- unique(interest_by_city$location)
 
-    # trends_unique_locations <- unique(acs_il$location)
-    # added new line
-    ```
+nonmatching <- setdiff(acs_unique_locations, google_unique_locations)
+
+length(nonmatching)
+```
+
+```{r}
+joining_data <- inner_join(acs_il, interest_by_city, by="location")
+```
 
 -   Compute the mean of the search popularity for both keywords for cities that have an above average median household income and for those that have an below average median household income. When building your pipe, start with creating the grouping variable and then proceed with the remaining tasks. What conclusions might you draw from this?
 
