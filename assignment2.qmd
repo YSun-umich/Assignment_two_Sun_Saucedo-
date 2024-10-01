@@ -153,6 +153,7 @@ Answer the following questions with the "crime" and "loans" Google trends data a
     acs_unique_locations <- unique(acs_il$location)
 
     # trends_unique_locations <- unique(acs_il$location)
+    # added new line
     ```
 
 -   Compute the mean of the search popularity for both keywords for cities that have an above average median household income and for those that have an below average median household income. When building your pipe, start with creating the grouping variable and then proceed with the remaining tasks. What conclusions might you draw from this?
