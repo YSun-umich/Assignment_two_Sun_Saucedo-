@@ -1,9 +1,11 @@
 ---
 title: "Assignment 2 - Yao Sun & Valeria Castañeda Saucedo"
-subtitle: "Due at 11:59pm on October 1."
-format: pdf
 editor: visual
+format: pdf
+output: pdf
 ---
+
+### Homework #2
 
 You may work in pairs or individually for this assignment. Make sure you join a group in Canvas if you are working in pairs. Turn in this assignment as an HTML or PDF file to ELMS. Make sure to include the R Markdown or Quarto file that was used to generate it.
 
@@ -59,28 +61,25 @@ summarize(
  kch_ibdmean=mean(hits),
  kch_ibdmedian=median(hits),
  kch_ibdvar=var(hits))
-
 ```
 
 ### Answer the following questions for the keywords "crime" and "loans".
 
 -   Find the mean, median and variance of the search hits for the keywords.
 
-   Within the data set interest over time, we found that the mean search hits for the keyword "crime" was 51.92 hits, the median search hits for the keyword "crime" was 52 hits, and the variance search hits for the keyword "crime" was 64.30. 
-   Within this data set we found that the average amount of hits for keyword "loan" was 63.62, the median amount of hits for keyword "loan" was 61 hits, and the variance amount of hits for keyword "loan" was 108.00.*
+Within the data set interest over time, we found that the mean search hits for the keyword "crime" was 51.92 hits, the median search hits for the keyword "crime" was 52 hits, and the variance search hits for the keyword "crime" was 64.30. Within this data set we found that the average amount of hits for keyword "loan" was 63.62, the median amount of hits for keyword "loan" was 61 hits, and the variance amount of hits for keyword "loan" was 108.00.\*
 
-   Within the data set interest by city, we found that the mean search hits for the keyword "crime" was 68.21, the median search hits for the keyword "crime" was 63 hits, and the variance search hits for the keyword "crime" 141.10. 
-   Within this data set we found that the average amount of hits for keyword "loan" was 67.26, the median amount of hits for keyword "loan" was 64 hits, and the variance amount of hits for keyword "loan" was 112.31.*
+Within the data set interest by city, we found that the mean search hits for the keyword "crime" was 68.21, the median search hits for the keyword "crime" was 63 hits, and the variance search hits for the keyword "crime" 141.10. Within this data set we found that the average amount of hits for keyword "loan" was 67.26, the median amount of hits for keyword "loan" was 64 hits, and the variance amount of hits for keyword "loan" was 112.31.\*
 
-   Within the data set interest by dma, we found that the mean search hits for the keyword "crime" was 88.4 hits, the median search hits for the keyword "crime" was 89.5 hits, and the variance search hits for the keyword "crime" was 72.27. Within this data set we found that the average amount of hits for keyword "loan" was 85.3, the median amount of hits for keyword "loan" was 83.0 hits, and the variance amount of hits for keyword "loan" was 86.90.*
+Within the data set interest by dma, we found that the mean search hits for the keyword "crime" was 88.4 hits, the median search hits for the keyword "crime" was 89.5 hits, and the variance search hits for the keyword "crime" was 72.27. Within this data set we found that the average amount of hits for keyword "loan" was 85.3, the median amount of hits for keyword "loan" was 83.0 hits, and the variance amount of hits for keyword "loan" was 86.90.\*
 
 ### Which cities (locations) have the highest search frequency for `loans`? Note that there might be multiple rows for each city if there were hits for both "crime" and "loans" in that city. It might be easier to answer this question if we had the search hits info for both search terms in two separate variables. That is, each row would represent a unique city.
 
 ```{r}
-total_sum <- interest_by_city %>% na.omit(interest_by_city) %>% sum(interest_by_city$hits)
-
-
-frequency_loans <- interest_by_city %>% mutate(sum_hits = sum(interest_by_city$hits))  
+# total_sum <- interest_by_city %>% na.omit(interest_by_city) %>% sum(interest_by_city$hits)
+# 
+# 
+# frequency_loans <- interest_by_city %>% mutate(sum_hits = sum(interest_by_city$hits))  
 
 
 # %>%  filter(keyword == "loan") %>% group_by(location) %>% summarize(frequency = hits / sum_hits)
@@ -90,7 +89,6 @@ frequency_loans <- interest_by_city %>% mutate(sum_hits = sum(interest_by_city$h
 *The city with the highest search frequency for "loans" is Riverdale.*
 
 ### Is there a relationship between the search intensities between the two keywords we used?
-
 
 ### Repeat the above for keywords related to covid. Make sure you use multiple keywords like we did above. Try several different combinations and think carefully about words that might make sense within this context.
 
@@ -152,8 +150,9 @@ acs_il <- getCensus(name = "acs/acs5",
                     vars = c("NAME", 
                              "B01001_001E", 
                              "B06002_001E", 
-                             "B19013_001E", 
-                             "B19301_001E"), 
+                             "B19013_001E", # Median household income in the past 12 months 
+                             "B19301_001E" # Per capita income in the past 12 months
+                             ), 
                     region = "place:*", 
                     regionin = "state:17",
                     key = cs_key)
@@ -204,27 +203,97 @@ nonmatching <- setdiff(acs_unique_locations, google_unique_locations)
 length(nonmatching)
 ```
 
+   Answer: There are 1122 cities that don't appear in both data sets. 
+
 ```{r}
-joining_data <- inner_join(acs_il, interest_by_city, by="location")
+# creating new data set by merging previous two
+joining_data <- inner_join(acs_il, 
+interest_by_city, by="location")
 ```
 
 -   Compute the mean of the search popularity for both keywords for cities that have an above average median household income and for those that have an below average median household income. When building your pipe, start with creating the grouping variable and then proceed with the remaining tasks. What conclusions might you draw from this?
 
 ```{r}
-mean_keyword <- joining_data %>% mutate(income = ifelse(hh_income > mean(hh_income, na.rm = TRUE), "higher than average", "lower than average")) %>% group_by(income, keyword) %>% summarise(mean_hits = mean(hits, na.rm = TRUE), .groups='drop')
+mean_popularity <- joining_data %>% mutate(
+  income = ifelse(hh_income > mean(hh_income, na.rm = TRUE), "higher than average", "lower than average")) %>% 
+  group_by(income, keyword) %>% 
+  summarise(mean_hits = mean(hits, na.rm = TRUE), .groups='drop')
 
-mean_keyword
-
+mean_popularity
 ```
+
+  Answer: The mean of the search popularity for "crime" for cities that have an above average median household income is 58, the mean of the search popularity for "loan" for those cities is 65.2.
+  The mean of the search popularity for "crime" for cities that have an below average median household income is 64.6, the mean of the search popularity for "loan" for those cities is 64.
 
 -   Is there a relationship between the median household income and the search popularity of the Google trends terms? Describe the relationship and use a scatterplot with `qplot()`.
 
 ```{r}
-library(ggplot2)
-
-ggplot(joining_data, aes(x=hh_income, y=hits, color="blue") + geom_point() + labs(title = "Median Income and Search Popularity"))
+income_hits <- joining_data %>%
+  na.omit() %>%
+  select(
+    location, hh_income, hits
+  )
+  
+qplot(hh_income, hits, data = income_hits) + 
+  labs(title = "Relationship between Median Household Income and Keyword Search Popularity",
+             x = "Median Household Income",
+             y = "Keyword Search Popularity")
 
 ```
 
-Repeat the above steps using the covid data and the ACS data.
+  Answer: We can't observe a relationship between the median household income and the keyword search popularity from the plot. 
+
+### Repeat the above steps using the covid data and the ACS data.
+
+First, we use the location information to merge the COVID data set with the Google Trends data, and then we answer the following questions with the "death" and "vaccine" Google trends data and the ACS data.
+
+-   First, check how many cities don't appear in both data sets, i.e. cannot be matched. Then, create a new data set by joining the Google Trends and the ACS data. Keep only cities that appear in both data sets.
+
+```{r}
+covid_unique_locations <- unique(vaccine_interest_bycity$location)
+
+nonmatching <- setdiff(acs_unique_locations, google_unique_locations)
+
+length(nonmatching)
+```
+
+ Answer: There are 1122 cities that don't appear in both data sets. 
+
+```{r}
+# creating new data set by merging previous two data sets
+covid_joining_data <- inner_join(acs_il, 
+vaccine_interest_bycity, by="location")
+```
+
+-   Compute the mean of the search popularity for both keywords for cities that have an above average median household income and for those that have an below average median household income. When building your pipe, start with creating the grouping variable and then proceed with the remaining tasks. What conclusions might you draw from this?
+
+```{r}
+covid_mean_popularity <- covid_joining_data %>% mutate(
+  income = ifelse(hh_income > mean(hh_income, na.rm = TRUE), "higher than average", "lower than average")) %>% 
+  group_by(income, keyword) %>% 
+  summarise(mean_hits = mean(hits, na.rm = TRUE), .groups='drop')
+
+covid_mean_popularity
+```
+
+  Answer: The mean of the search popularity for "death" for cities that have an above average median household income is 63.1, the mean of the search popularity for "vaccine" for those cities is 37.1.
+  The mean of the search popularity for "death" for cities that have an below average median household income is 70, the mean of the search popularity for "vaccine" for those cities is 40.7.
+
+-   Is there a relationship between the median household income and the search popularity of the Google trends terms? Describe the relationship and use a scatterplot with `qplot()`.
+
+```{r}
+covid_income_hits <- covid_joining_data %>%
+  na.omit() %>%
+  select(
+    location, hh_income, hits
+  )
+  
+qplot(hh_income, hits, data = covid_income_hits) + 
+  labs(title = "Relationship between Median Household Income and Keyword Search Popularity",
+             x = "Median Household Income",
+             y = "Keyword Search Popularity")
+
+```
+
+  Answer: 
 
