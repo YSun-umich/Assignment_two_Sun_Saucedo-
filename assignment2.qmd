@@ -75,15 +75,10 @@ Answer the following questions for the keywords "crime" and "loans".
 
     revised_data <- res$interest_by_city %>%
       na.omit() %>%
-      filter(keyword)%>%
+      group_by(keyword)%>%
     mutate(location = "loans")
     revised_data
 
-    revised_data %>% 
-      arrange(desc(loan_frequency))
-
-    revised_data %>% 
-      arrange(desc(crime_frequency))
     ```
 
 *The city with the highest search frequency for "loans" is Riverdale.*
