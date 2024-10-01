@@ -79,6 +79,7 @@ Answer the following questions for the keywords "crime" and "loans".
     mutate(location = "loans")
     revised_data
 
+  
     ```
 
 *The city with the highest search frequency for "loans" is Riverdale.*
