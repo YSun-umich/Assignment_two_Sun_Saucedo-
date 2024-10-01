@@ -5,6 +5,8 @@ format: pdf
 editor: visual
 ---
 
+test GItHub 
+
 You may work in pairs or individually for this assignment. Make sure you join a group in Canvas if you are working in pairs. Turn in this assignment as an HTML or PDF file to ELMS. Make sure to include the R Markdown or Quarto file that was used to generate it.
 
 ```{r}
@@ -154,6 +156,7 @@ Answer the following questions with the "crime" and "loans" Google trends data a
 
     ```{r}
     acs_unique_locations <- unique(acs_il$location)
+    
 
     # trends_unique_locations <- unique(acs_il$location)
     # added new line
