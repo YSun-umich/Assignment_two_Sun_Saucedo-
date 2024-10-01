@@ -31,6 +31,8 @@ res <- gtrends(c("crime", "loans"),
                low_search_volume = TRUE)
 plot(res)
 
+interest_by_city <- res$interest_by_city
+
 res$interest_over_time %>%
   na.omit() %>%
   group_by(keyword)%>%
