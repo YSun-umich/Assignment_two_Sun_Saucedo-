@@ -12,6 +12,7 @@ You may work in pairs or individually for this assignment. Make sure you join a 
 library(tidyverse)
 library(gtrendsR)
 library(censusapi)
+library(dplyr)
 ```
 
 In this assignment, you will pull from APIs to get data from various data sources and use your data wrangling skills to use them all together. You should turn in a report in PDF or HTML format that addresses all of the questions in this assignment, and describes the data that you pulled and analyzed. You do not need to include full introduction and conclusion sections like a full report, but you should make sure to answer the questions in paragraph form, and include all relevant tables and graphics.
@@ -70,9 +71,6 @@ Answer the following questions for the keywords "crime" and "loans".
 -   Which cities (locations) have the highest search frequency for `loans`? Note that there might be multiple rows for each city if there were hits for both "crime" and "loans" in that city. It might be easier to answer this question if we had the search hits info for both search terms in two separate variables. That is, each row would represent a unique city.
 
     ```{r}
-    # library(dplyr)
-    library(tidyverse)
-
     revised_data <- res$interest_by_city %>%
       na.omit() %>%
       group_by(keyword)%>%
@@ -98,7 +96,7 @@ Now lets add another data set. The `censusapi` package provides a nice R interfa
 Once you have an access key, save it as a text file, then read this key in the `cs_key` object. We will use this object in all following API queries. Note that I called my text file `census-key.txt` -- yours might be different!
 
 ```{r}
-cs_key <- read_file("census-key.txt")
+cs_key <- read_file("../census-key.txt")
 ```
 
 In the following, we request basic socio-demographic information (population, median age, median household income, income per capita) for cities and villages in the state of Illinois. Documentation for the 5-year ACS API can be found here: <https://www.census.gov/data/developers/data-sets/acs-5year.html>. The information about the variables used here can be found here: <https://api.census.gov/data/2022/acs/acs5/variables.html>.
@@ -132,16 +130,37 @@ acs_il <-
          age = B06002_001E, 
          hh_income = B19013_001E, 
          income = B19301_001E)
+
 ```
 
 It seems like we could try to use this location information listed above to merge this data set with the Google Trends data. However, we first have to clean `NAME` so that it has the same structure as `location` in the search interest by city data. Add a new variable `location` to the ACS data that only includes city names.
 
+```{r}
+acs_il$location <- acs_il$NAME
+
+acs_il$location <- sapply(strsplit(as.character(acs_il$location), ","), '[', 1)
+
+acs_il$location <- gsub("\\s+(village|city|town|CDP)$", "", acs_il$location)
+
+acs_il <- acs_il %>% select(-NAME)
+```
+
 Answer the following questions with the "crime" and "loans" Google trends data and the ACS data.
 
 -   First, check how many cities don't appear in both data sets, i.e. cannot be matched. Then, create a new data set by joining the Google Trends and the ACS data. Keep only cities that appear in both data sets.
+
+    ```{r}
+    acs_unique_locations <- unique(acs_il$location)
+
+    # trends_unique_locations <- unique(acs_il$location)
+    ```
 
 -   Compute the mean of the search popularity for both keywords for cities that have an above average median household income and for those that have an below average median household income. When building your pipe, start with creating the grouping variable and then proceed with the remaining tasks. What conclusions might you draw from this?
 
 -   Is there a relationship between the median household income and the search popularity of the Google trends terms? Describe the relationship and use a scatterplot with `qplot()`.
 
 Repeat the above steps using the covid data and the ACS data.
+
+```{r}
+
+```
