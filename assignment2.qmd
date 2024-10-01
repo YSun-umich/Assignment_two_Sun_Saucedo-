@@ -71,12 +71,6 @@ Answer the following questions for the keywords "crime" and "loans".
 -   Which cities (locations) have the highest search frequency for `loans`? Note that there might be multiple rows for each city if there were hits for both "crime" and "loans" in that city. It might be easier to answer this question if we had the search hits info for both search terms in two separate variables. That is, each row would represent a unique city.
 
     ```{r}
-<<<<<<< HEAD
-    # library(dplyr)
-    # library(tidyverse)
-
-=======
->>>>>>> c6175827f6e72e855377f1f4441dd8653bc4152a
     revised_data <- res$interest_by_city %>%
       na.omit() %>%
       group_by(keyword)%>%
