@@ -1,5 +1,5 @@
 ---
-title: "Assignment 2 Yao Sun & Valeria Castañeda Saucedo"
+title: "Assignment 2 - Yao Sun & Valeria Castañeda Saucedo"
 subtitle: "Due at 11:59pm on October 1."
 format: pdf
 editor: visual
@@ -32,7 +32,11 @@ res <- gtrends(c("crime", "loans"),
 plot(res)
 
 interest_by_city <- res$interest_by_city
+interest_by_dma <- res$interest_by_dma
+interest_overtime <- res$interest_over_time
+```
 
+```{r}
 res$interest_over_time %>%
   na.omit() %>%
   group_by(keyword)%>%
@@ -40,7 +44,6 @@ summarize(
  kch_iotmean=mean(hits),
  kch_iotmedian=median(hits),
  kch_iotvar=var(hits))
-
 
 res$interest_by_city %>%
   na.omit() %>%
@@ -72,21 +75,19 @@ Answer the following questions for the keywords "crime" and "loans".
 
 -   Which cities (locations) have the highest search frequency for `loans`? Note that there might be multiple rows for each city if there were hits for both "crime" and "loans" in that city. It might be easier to answer this question if we had the search hits info for both search terms in two separate variables. That is, each row would represent a unique city.
 
-    ```{r}
-    revised_data <- res$interest_by_city %>%
+```{r}
+revised_data <- res$interest_by_city %>%
       na.omit() %>%
       group_by(keyword)%>%
     mutate(location = "loans")
     revised_data
 
   
-    ```
+```
 
 *The city with the highest search frequency for "loans" is Riverdale.*
 
 -   Is there a relationship between the search intensities between the two keywords we used?
-
-\*
 
 Repeat the above for keywords related to covid. Make sure you use multiple keywords like we did above. Try several different combinations and think carefully about words that might make sense within this context.
 
@@ -168,10 +169,21 @@ joining_data <- inner_join(acs_il, interest_by_city, by="location")
 
 -   Compute the mean of the search popularity for both keywords for cities that have an above average median household income and for those that have an below average median household income. When building your pipe, start with creating the grouping variable and then proceed with the remaining tasks. What conclusions might you draw from this?
 
+```{r}
+mean_keyword <- joining_data %>% mutate(income = ifelse(hh_income > mean(hh_income, na.rm = TRUE), "higher than average", "lower than average")) %>% group_by(income, keyword) %>% summarise(mean_hits = mean(hits, na.rm = TRUE), .groups='drop')
+
+mean_keyword
+
+```
+
 -   Is there a relationship between the median household income and the search popularity of the Google trends terms? Describe the relationship and use a scatterplot with `qplot()`.
+
+```{r}
+library(ggplot2)
+
+ggplot(joining_data, aes(x=hh_income, y=hits, color="blue") + geom_point() + labs(title = "Median Income and Search Popularity"))
+
+```
 
 Repeat the above steps using the covid data and the ACS data.
 
-```{r}
-
-```
