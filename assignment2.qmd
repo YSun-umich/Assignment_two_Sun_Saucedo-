@@ -61,13 +61,36 @@ Answer the following questions for the keywords "crime" and "loans".
 
 -   Find the mean, median and variance of the search hits for the keywords.
 
-\*Within the data set interest over time, we found that the mean search hits for the keyword "crime" was 51.92 hits, the median search hits for the keyword "crime" was 52 hits, and the variance search hits for the keyword "crime" was 64.30. Additionally, within this data set we found that the average amount of hits for keyword "loan" was 63.62, the median amount of hits for keyword "loan" was 61 hits, and the variance amount of hits for keyword "loan" was 108.00.
+*Within the data set interest over time, we found that the mean search hits for the keyword "crime" was 51.92 hits, the median search hits for the keyword "crime" was 52 hits, and the variance search hits for the keyword "crime" was 64.30. Additionally, within this data set we found that the average amount of hits for keyword "loan" was 63.62, the median amount of hits for keyword "loan" was 61 hits, and the variance amount of hits for keyword "loan" was 108.00.*
 
-Within the data set interest by dma, we found that the mean search hits for the keyword "crime" was 88.4 hits, the median search hits for the keyword "crime" was 89.5 hits, and the variance search hits for the keyword "crime" was 72.27. Additionally, within this data set we found that the average amount of hits for keyword "loan" was 85.3, the median amount of hits for keyword "loan" was 83.0 hits, and the variance amount of hits for keyword "loan" was 86.90.
+*Within the data set interest by city, we found that the mean search hits for the keyword "crime" was 68.21, the median search hits for the keyword "crime" was 63 hits, and the variance search hits for the keyword "crime" 141.10. Additionally, within this data set we found that the average amount of hits for keyword "loan" was 67.26, the median amount of hits for keyword "loan" was 64 hits, and the variance amount of hits for keyword "loan" was 112.31.*
+
+*Within the data set interest by dma, we found that the mean search hits for the keyword "crime" was 88.4 hits, the median search hits for the keyword "crime" was 89.5 hits, and the variance search hits for the keyword "crime" was 72.27. Additionally, within this data set we found that the average amount of hits for keyword "loan" was 85.3, the median amount of hits for keyword "loan" was 83.0 hits, and the variance amount of hits for keyword "loan" was 86.90.*
 
 -   Which cities (locations) have the highest search frequency for `loans`? Note that there might be multiple rows for each city if there were hits for both "crime" and "loans" in that city. It might be easier to answer this question if we had the search hits info for both search terms in two separate variables. That is, each row would represent a unique city.
 
+    ```{r}
+    # library(dplyr)
+    library(tidyverse)
+
+    revised_data <- res$interest_by_city %>%
+      na.omit() %>%
+      filter(keyword)%>%
+    mutate(location = "loans")
+    revised_data
+
+    revised_data %>% 
+      arrange(desc(loan_frequency))
+
+    revised_data %>% 
+      arrange(desc(crime_frequency))
+    ```
+
+*The city with the highest search frequency for "loans" is Riverdale.*
+
 -   Is there a relationship between the search intensities between the two keywords we used?
+
+\*
 
 Repeat the above for keywords related to covid. Make sure you use multiple keywords like we did above. Try several different combinations and think carefully about words that might make sense within this context.
 
