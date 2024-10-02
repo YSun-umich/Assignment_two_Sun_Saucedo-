@@ -4,7 +4,7 @@ editor: visual
 format: pdf
 output: pdf
 ---
-
+hello
 ### Homework #2
 
 You may work in pairs or individually for this assignment. Make sure you join a group in Canvas if you are working in pairs. Turn in this assignment as an HTML or PDF file to ELMS. Make sure to include the R Markdown or Quarto file that was used to generate it.
@@ -372,7 +372,7 @@ covid_mean_popularity
   The mean of the search popularity for "death" for cities that have an below average median household income is 70, the mean of the search popularity for "vaccine" for those cities is 40.7.
 
 ### Is there a relationship between the median household income and the search popularity of the Google trends terms? Describe the relationship and use a scatterplot with `qplot()`.
-
+ 
 ```{r}
 covid_income_hits <- covid_joining_data %>%
   na.omit() %>%
