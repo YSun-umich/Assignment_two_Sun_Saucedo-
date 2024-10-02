@@ -253,13 +253,13 @@ acs_il <- getCensus(name = "acs/acs5",
 head(acs_il)
 ```
 
-Convert values that represent missings to NAs.
+### Convert values that represent missings to NAs.
 
 ```{r}
 acs_il[acs_il == -666666666] <- NA
 ```
 
-Now, it might be useful to rename the socio-demographic variables (`B01001_001E` etc.) in our data set and assign more meaningful names.
+### Now, it might be useful to rename the socio-demographic variables (`B01001_001E` etc.) in our data set and assign more meaningful names.
 
 ```{r}
 acs_il <-
@@ -271,7 +271,7 @@ acs_il <-
 
 ```
 
-It seems like we could try to use this location information listed above to merge this data set with the Google Trends data. However, we first have to clean `NAME` so that it has the same structure as `location` in the search interest by city data. Add a new variable `location` to the ACS data that only includes city names.
+### It seems like we could try to use this location information listed above to merge this data set with the Google Trends data. However, we first have to clean `NAME` so that it has the same structure as `location` in the search interest by city data. Add a new variable `location` to the ACS data that only includes city names.
 
 ```{r}
 acs_il$location <- acs_il$NAME
@@ -283,7 +283,7 @@ acs_il$location <- gsub("\\s+(village|city|town|CDP)$", "", acs_il$location)
 acs_il <- acs_il %>% select(-NAME)
 ```
 
-Answer the following questions with the "crime" and "loans" Google trends data and the ACS data.
+### Answer the following questions with the "crime" and "loans" Google trends data and the ACS data.
 
 -   First, check how many cities don't appear in both data sets, i.e. cannot be matched. Then, create a new data set by joining the Google Trends and the ACS data. Keep only cities that appear in both data sets.
 
@@ -304,7 +304,7 @@ joining_data <- inner_join(acs_il,
 interest_by_city, by="location")
 ```
 
--   Compute the mean of the search popularity for both keywords for cities that have an above average median household income and for those that have an below average median household income. When building your pipe, start with creating the grouping variable and then proceed with the remaining tasks. What conclusions might you draw from this?
+### Compute the mean of the search popularity for both keywords for cities that have an above average median household income and for those that have an below average median household income. When building your pipe, start with creating the grouping variable and then proceed with the remaining tasks. What conclusions might you draw from this?
 
 ```{r}
 mean_popularity <- joining_data %>% mutate(
@@ -318,7 +318,7 @@ mean_popularity
   Answer: The mean of the search popularity for "crime" for cities that have an above average median household income is 58, the mean of the search popularity for "loan" for those cities is 65.2.
   The mean of the search popularity for "crime" for cities that have an below average median household income is 64.6, the mean of the search popularity for "loan" for those cities is 64.
 
--   Is there a relationship between the median household income and the search popularity of the Google trends terms? Describe the relationship and use a scatterplot with `qplot()`.
+### Is there a relationship between the median household income and the search popularity of the Google trends terms? Describe the relationship and use a scatterplot with `qplot()`.
 
 ```{r}
 income_hits <- joining_data %>%
@@ -358,7 +358,7 @@ covid_joining_data <- inner_join(acs_il,
 vaccine_interest_bycity, by="location")
 ```
 
--   Compute the mean of the search popularity for both keywords for cities that have an above average median household income and for those that have an below average median household income. When building your pipe, start with creating the grouping variable and then proceed with the remaining tasks. What conclusions might you draw from this?
+### Compute the mean of the search popularity for both keywords for cities that have an above average median household income and for those that have an below average median household income. When building your pipe, start with creating the grouping variable and then proceed with the remaining tasks. What conclusions might you draw from this?
 
 ```{r}
 covid_mean_popularity <- covid_joining_data %>% mutate(
@@ -372,7 +372,7 @@ covid_mean_popularity
   Answer: The mean of the search popularity for "death" for cities that have an above average median household income is 63.1, the mean of the search popularity for "vaccine" for those cities is 37.1.
   The mean of the search popularity for "death" for cities that have an below average median household income is 70, the mean of the search popularity for "vaccine" for those cities is 40.7.
 
--   Is there a relationship between the median household income and the search popularity of the Google trends terms? Describe the relationship and use a scatterplot with `qplot()`.
+### Is there a relationship between the median household income and the search popularity of the Google trends terms? Describe the relationship and use a scatterplot with `qplot()`.
 
 ```{r}
 covid_income_hits <- covid_joining_data %>%
