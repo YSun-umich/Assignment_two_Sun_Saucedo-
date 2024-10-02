@@ -68,12 +68,12 @@ summarize(
 
 -   Find the mean, median and variance of the search hits for the keywords.
 
-  Answer:  Within the data set interest over time, we found that the mean search hits for the keyword “crime” was 51.92 hits, the median search hits for the keyword “crime” was 52 hits, and the variance search hits for the keyword “crime” was 64.30. Additionally, within this data set we found that the average amount of hits for keyword “loan” was 63.62, the median amount of hits for keyword “loan” was 61 hits, and the variance amount of hits for keyword “loan” was
-108.00.
+  Answer:  Within the data set interest over time, we found that the mean search hits for the keyword “crime” was 53.2 hits, the median search hits for the keyword “crime” was 53 hits, and the variance search hits for the keyword “crime” was 76.9. Additionally, within this data set we found that the average amount of hits for keyword “loan” was 65.2, the median amount of hits for keyword “loan” was 63 hits, and the variance amount of hits for keyword “loan” was
+118.
 
-  Within the data set interest by city, we found that the mean search hits for the keyword “crime” was 68.21, the median search hits for the keyword “crime” was 63 hits, and the variance search hits for the keyword “crime” 141.10. Additionally, within this data set we found that the average amount of hits for keyword “loan” was 67.26, the median amount of hits for keyword “loan” was 64 hits, and the variance amount of hits for keyword “loan” was 112.31.
+  Within the data set interest by city, we found that the mean search hits for the keyword “crime” was 61.1, the median search hits for the keyword “crime” was 57 hits, and the variance search hits for the keyword “crime” 161. Additionally, within this data set we found that the average amount of hits for keyword “loan” was 64.9, the median amount of hits for keyword “loan” was 62.5 hits, and the variance amount of hits for keyword “loan” was 91.5.
 
-  Within the data set interest by dma, we found that the mean search hits for the keyword “crime” was 88.4 hits, the median search hits for the keyword “crime” was 89.5 hits, and the variance search hits for the keyword “crime” was 72.27. Additionally, within this data set we found that the average amount of hits for keyword “loan” was 85.3, the median amount of hits for keyword “loan” was 83.0 hits, and the variance amount of hits for keyword “loan” was 86.90.
+  Within the data set interest by dma, we found that the mean search hits for the keyword “crime” was 89.7 hits, the median search hits for the keyword “crime” was 91.5 hits, and the variance search hits for the keyword “crime” was 74. Additionally, within this data set we found that the average amount of hits for keyword “loan” was 87.4, the median amount of hits for keyword “loan” was 85 hits, and the variance amount of hits for keyword “loan” was 49.8.
 
 ### Which cities (locations) have the highest search frequency for `loans`? Note that there might be multiple rows for each city if there were hits for both "crime" and "loans" in that city. It might be easier to answer this question if we had the search hits info for both search terms in two separate variables. That is, each row would represent a unique city.
 
@@ -167,13 +167,12 @@ summarize(
  kch_ibdvar=var(hits))
 ```
 
-  Answer: Within the data set vaccine interest over time, we found that the mean search hits for the keyword “death” was 58.43 hits, the median search hits for the keyword “death” was 55 hits, and the variance search hits for the keyword “death” was 137.135. Additionally, within this data set we found that the average amount of hits for keyword “vaccine” was 19.60, the median
-amount of hits for keyword “vaccine” was 15 hits, and the variance amount of hits for keyword “vaccine” was 339.09.
+  Answer: Within the data set vaccine interest over time, we found that the mean search hits for the keyword “death” was 58.3 hits, the median search hits for the keyword “death” was 54 hits, and the variance search hits for the keyword “death” was 133. Additionally, within this data set we found that the average amount of hits for keyword “vaccine” was 19.5, the median amount of hits for keyword “vaccine” was 15 hits, and the variance amount of hits for keyword “vaccine” was 343.
 
-  Within the data set interest by city, we found that the mean search hits for the keyword “death” was 63.81, the median search hits for the keyword “death” was 60 hits, and the variance search hits for the keyword “death” 92.72. Additionally, within this data set we found that the average amount of hits for keyword “vaccine” was 35.03, the median amount of hits for keyword “vaccine” was 33 hits, and the variance amount of hits for keyword “vaccine” was 86.18.
+  Within the data set interest by city, we found that the mean search hits for the keyword “death” was 66.6, the median search hits for the keyword “death” was 63 hits, and the variance search hits for the keyword “death” 98.7. Additionally, within this data set we found that the average amount of hits for keyword “vaccine” was 37.5, the median amount of hits for keyword “vaccine” was 34 hits, and the variance amount of hits for keyword “vaccine” was 139.
   
   Within the data set vaccine interest by dma, we found that the mean search hits for the keyword “death” was 97.3 hits, the median search hits for the keyword “death” was 97.5 hits, and the variance search hits for the keyword “death” was 4.01. Additionally, within this data set we found that the average amount of hits for keyword “vaccine” was 79.7, the median amount of hits for keyword “vaccine” was 77.5 hits, and the variance amount of hits for keyword “vaccine”
-was 108.90.
+was 109.
 
 ```{r}
 drevised_data <- vaccine_interest_bycity %>%
