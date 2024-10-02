@@ -92,6 +92,7 @@ select(location,frequency)%>%
  arrange(desc(frequency))
 
 revised_data
+crime_data
 ```
 
   Answer: The city with the highest search frequency for “loans” is Evergreen Park.
@@ -109,6 +110,22 @@ ggplot(crime_data, aes( x = reorder(location, -frequency), y = frequency))+
   theme_minimal() +
   theme(axis.text.x = element_text (angle = 90, hjust = 1))
 ```
+
+```{r}
+ loan_h <- res$interest_over_time %>%
+    filter(keyword == "loans") %>%
+    pull(hits)
+loan_h
+
+ crime_h <- res$interest_over_time %>%
+    filter(keyword == "crime") %>%
+    pull(hits)
+crime_h
+
+cor(loan_h, crime_h)
+```
+
+  Answer: There is a negative correlation between the words we used.
 
 ### Repeat the above for keywords related to covid. Make sure you use multiple keywords like we did above. Try several different combinations and think carefully about words that might make sense within this context.
 
@@ -190,8 +207,23 @@ ggplot(vrevised_data, aes( x = reorder(location, -frequency), y = frequency))+
   theme(axis.text.x = element_text (angle = 90, hjust = 1, size = 5))
 ```
 
-### Part Two
+```{r}
+death_h <- vaccine_interest_overtime %>%
+    filter(keyword == "death") %>%
+    pull(hits)
+death_h
 
+vaccine_h <- vaccine_interest_overtime %>%
+    filter(keyword == "vaccine") %>%
+    pull(hits)
+vaccine_h
+
+ cor(death_h, vaccine_h)
+```
+
+  Answer: There is a negative correlation between the words we used.
+
+### Part Two
 ### Google Trends + ACS
 
 Now lets add another data set. The `censusapi` package provides a nice R interface for communicating with this API. However, before running queries we need an access key. This (easy) process can be completed here:
@@ -266,7 +298,6 @@ length(nonmatching)
 ```
 
    Answer: There are 1122 cities that don't appear in both data sets. 
-
 ```{r}
 # creating new data set by merging previous two
 joining_data <- inner_join(acs_il, 
@@ -303,7 +334,7 @@ qplot(hh_income, hits, data = income_hits) +
 
 ```
 
-  Answer: We can't observe a relationship between the median household income and the keyword search popularity from the plot. 
+  Answer: We can't observe a clear relationship between median household income and keyword search popularity. The data points appear to be randomly distributed, with most keyword popularities clustering between 55 and 75, although there are two outliers at the end of the popularity-axis. 
 
 ### Repeat the above steps using the covid data and the ACS data.
 
@@ -357,5 +388,5 @@ qplot(hh_income, hits, data = covid_income_hits) +
 
 ```
 
-  Answer: 
+  Answer: We can't observe a clear relationship between median household income and keyword search popularity. Most keyword popularities are around or below 40, that are associated with median household incomes ranging from 50,000 to 200,000. Within this income range, there are some keyword popularities above 60, and three that exceed 80. However, these observations do not suggest a meaningful relationship.
 
